@@ -39,7 +39,7 @@ void IOS() {
 }
 
 // A handy function for using  sortbysec argument for sorting an array in increasing/decreasing order
-bool sortbysec(const pair<int, int> &a, const pair<int, int> &b) {
+bool myCompare(const pair<int, int> &a, const pair<int, int> &b) {
 	return (a.second < b.second);
 }
 
@@ -95,6 +95,37 @@ int max3(int a, int b, int c) {
 int min3(int a, int b, int c) {
 	return min(a, min(b, c));
 }
+
+
+int spf[mxN];
+void sieve() {
+	spf[1] = 1;
+	for (int i = 2; i < mxN; i++) {
+		spf[i] = i;
+	}
+	for (int i = 4; i < mxN; i += 2) {
+		spf[i] = 2;
+	}
+	for (int i = 3; i * i < mxN; i++) {
+		if (spf[i] == i) {
+			for (int j = i * i; j < mxN; j += i) {
+				if (spf[j] == j) {
+					spf[j] = i;
+				}
+			}
+		}
+	}
+}
+
+vector<int> getFactorization(int x) {
+	vector<int> res;
+	while (x != 1) {
+		res.push_back(spf[x]);
+		x = x / spf[x];
+	}
+	return res;
+}
+
 /* ###############################.. Actual Coding starts ..###################################*/
 
 void FourtyTwo() {
